@@ -1,0 +1,71 @@
+CREATE EXTENSION get_sum;
+SELECT get_sum(1::INT, 1::INT);
+ get_sum 
+---------
+       2
+(1 row)
+
+SELECT get_sum(101::INT, 202::INT);
+ get_sum 
+---------
+     303
+(1 row)
+
+SELECT get_sum(0::INT, 0::INT);
+ get_sum 
+---------
+       0
+(1 row)
+
+SELECT get_sum(-1::INT, 0::INT);
+ get_sum 
+---------
+      -1
+(1 row)
+
+SELECT get_sum(-1::INT, -1::INT);
+ get_sum 
+---------
+      -2
+(1 row)
+
+SELECT get_sum(-101::INT, -202::INT);
+ get_sum 
+---------
+    -303
+(1 row)
+
+SELECT get_sum(NULL::INT, 11::INT);
+ get_sum 
+---------
+        
+(1 row)
+
+SELECT get_sum(-1::INT, NULL::INT);
+ get_sum 
+---------
+        
+(1 row)
+
+SELECT get_sum(0::INT, 2147483647::INT);
+  get_sum   
+------------
+ 2147483647
+(1 row)
+
+SELECT get_sum(-2147483648::INT, 0::INT);
+ERROR:  integer out of range
+SELECT get_sum(2147483647::INT, 2147483647::INT);
+ get_sum 
+---------
+      -2
+(1 row)
+
+SELECT get_sum(-2147483648::INT, -2147483648::INT);
+ERROR:  integer out of range
+SELECT get_sum(-2147483648::INT, 2147483647::INT);
+ERROR:  integer out of range
+SELECT get_sum(2147483647::INT, -2147483648::INT);
+ERROR:  integer out of range
+SELECT get_sum(111111111111111::INT, 222222222222222::INT);
+ERROR:  integer out of range
